@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  gap: 100px;
+}
+.imgContainer {
+  flex: 1;
+  position: relative;
+  height: calc(100vh-200px);
+}
+
+.textContainer {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.img {
+  object-fit: cover;
+}
+
+.title {
+  font-size: 64px;
+}
+
+.detail {
+  display: flex;
+  gap: 30px;
+}
+.avator {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.detailsText {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detailTitle {
+  color: gray;
+  font-weight: bold;
+}
+.detailValue {
+  font-weight: 500;
+}
+.content {
+  font-size: 20px;
+}
