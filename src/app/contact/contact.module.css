@@ -37,3 +37,9 @@
   color: var(--text);
   border: none;
 }
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+}
