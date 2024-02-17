@@ -1,13 +1,23 @@
 .container {
   display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.texts {
+  display: flex;
   flex-direction: column;
   gap: 5px;
 }
-
 .title {
   color: gray;
   font-weight: bold;
 }
 .username {
   font-weight: 500;
+}
+
+.avator {
+  border-radius: 50%;
+  object-fit: cover;
 }

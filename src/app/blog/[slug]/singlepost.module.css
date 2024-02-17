@@ -5,7 +5,7 @@
 .imgContainer {
   flex: 1;
   position: relative;
-  height: calc(100vh-200px);
+  height: calc(100vh - 200px);
 }
 
 .textContainer {
@@ -25,10 +25,6 @@
 .detail {
   display: flex;
   gap: 30px;
-}
-.avator {
-  border-radius: 50%;
-  object-fit: cover;
 }
 
 .detailsText {
