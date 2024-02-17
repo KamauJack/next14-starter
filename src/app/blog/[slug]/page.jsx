@@ -1,6 +1,18 @@
 import Image from "next/image";
 import styles from "./singlepost.module.css";
-const SinglePostPage = () => {
+import PostUser from "@/components/postUser/PostUser";
+
+const getData = async (slug) => {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+  return res.json();
+};
+
+const SinglePostPage = async ({ params }) => {
+  const { slug } = params;
+  const post = await getData(slug);
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
@@ -12,7 +24,7 @@ const SinglePostPage = () => {
         />
       </div>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>Title</h1>
+        <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.detail}>
           <Image
             src="/contact.png"
@@ -21,21 +33,14 @@ const SinglePostPage = () => {
             alt="post title"
             className={styles.avator}
           />
-          <div className={styles.detailsText}>
-            <span className={styles.detailTitle}>Author</span>
-            <span className={styles.detailValue}>Jax Maverick</span>
-          </div>
+          <PostUser userId={post.userId} />
           <div className={styles.detailsText}>
             <span className={styles.detailTitle}>Published</span>
             <span className={styles.detailValue}>01 Nov</span>
           </div>
         </div>
         <div className={styles.content}>
-          <p className={styles.desc}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. In tempore,
-            delectus inventore qui accusamus animi laudantium minima tempora
-            beatae quibusdam.
-          </p>
+          <p className={styles.desc}>{post.body}</p>
         </div>
       </div>
     </div>
