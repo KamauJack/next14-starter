@@ -12,16 +12,43 @@ export const handleLogout = async () => {
   await signOut();
 };
 
-export const register = async (formData) => {
+export const deletePost = async (formData) => {
+  const { id } = Object.fromEntries(formData);
+  try {
+    connectToDb();
+    await Post.findByIdAndDelet(id);
+    console.log("deleted from DB");
+    revalidatePath("/blog");
+    revalidatePath("/admin");
+  } catch (error) {
+    console.log(error);
+    return { error: "Something went wrong" };
+  }
+};
+export const deleteUser = async (formData) => {
+  const { id } = Object.fromEntries(formData);
+  try {
+    connectToDb();
+    await User.findByIdAndDelet(id);
+    console.log("deleted from DB");
+    revalidatePath("/blog");
+    revalidatePath("/admin");
+  } catch (error) {
+    console.log(error);
+    return { error: "Something went wrong" };
+  }
+};
+
+export const register = async (previousState, formData) => {
   const { username, email, img, password, passwordRepeat } =
     Object.fromEntries(formData);
   if (password !== passwordRepeat) {
-    return "Passwords do not match";
+    return { error: "Passwords do not match" };
   }
   try {
     const user = await User.findOne({ username });
     if (user) {
-      return "user already exists";
+      return { error: "user already exists" };
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -35,17 +62,22 @@ export const register = async (formData) => {
     });
     await newUser.save();
     console.log("saved");
+    return { success: true };
   } catch (error) {
     console.log(error);
     return { error: "Something went wrong" };
   }
 };
-export const login = async (formData) => {
+export const login = async (previousState, formData) => {
   const { username, password } = Object.fromEntries(formData);
 
   try {
+    await signIn("credentials", { username, password });
   } catch (error) {
     console.log(error);
-    return { error: "Something went wrong" };
+    if (error.message.includes("CredentialsSignin")) {
+      return { error: "Invalid username or password" };
+    }
+    throw error;
   }
 };
